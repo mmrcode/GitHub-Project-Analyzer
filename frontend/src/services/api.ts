@@ -1,6 +1,7 @@
 import { FullRepoAnalysis, AIFileExplanation, ParsedFileInfo } from '../types';
 
-const API_BASE = '/api';
+const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+const API_BASE = `${API_ORIGIN}/api`;
 
 export async function analyzeRepository(
   url: string,

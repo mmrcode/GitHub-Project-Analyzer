@@ -147,7 +147,21 @@ tests\test_analyzer.py .....                                             [100%]
 
 ---
 
-## 6. Project Directory Layout
+## 6. Deployment (Netlify + Render)
+
+The React frontend can be hosted on Netlify, but the FastAPI backend must also be deployed because Netlify serves static frontend files. This repository includes a Render blueprint for the backend.
+
+1. Deploy the backend on Render by creating a new Blueprint from this repository and applying `render.yaml`. Set `GEMINI_API_KEY` in the Render service if you want to enable Gemini features. After deployment, copy the backend service URL (for example, `https://your-service.onrender.com`).
+2. In Netlify, import this repository as a new site. The root `netlify.toml` configures the frontend build and SPA routing.
+3. In the Netlify site's **Site configuration → Environment variables**, add `VITE_API_BASE_URL` with the Render backend URL, without a trailing slash or `/api` (for example, `https://your-service.onrender.com`).
+4. Trigger a new Netlify deploy so the environment variable is included in the frontend build.
+5. Verify the backend is reachable at `https://your-service.onrender.com/api/health`, then open the Netlify site and analyze a repository.
+
+The frontend uses `/api` automatically in local development, where Vite proxies requests to `http://127.0.0.1:8000`.
+
+---
+
+## 7. Project Directory Layout
 
 ```
 Git Analyzer/
