@@ -27,6 +27,10 @@ async def export_markdown_report(analysis: FullRepoAnalysis):
         f"### {step.title}\n{step.description}\n```bash\n{step.command or ''}\n```"
         for step in (analysis.setup_guide.install_steps + analysis.setup_guide.run_steps)
     ])
+    language_distribution = "".join(
+        f"- **{language.name}**: {language.percentage}% ({language.file_count} files)\n"
+        for language in tech.languages
+    )
 
     viva_md = []
     for q in analysis.viva_questions:
@@ -85,7 +89,7 @@ async def export_markdown_report(analysis: FullRepoAnalysis):
 - **Source Files Analyzed:** {len(analysis.parsed_code)}
 
 ### Language Distribution
-{"".join([f"- **{l.name}**: {l.percentage}% ({l.file_count} files)\n" for l in tech.languages])}
+{language_distribution}
 
 ---
 
